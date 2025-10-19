@@ -63,7 +63,7 @@ module "acr" {
   git_pat             = var.git_pat
   #os_cont_registry    = "Linux"
   # Шлях до папки з кодом
-  app_location = "${var.git_repo_url}#main:application"
+  app_location = "${var.git_repo_url}#main:task08/application"
   task_name    = local.acr_task_name
 }
 
@@ -211,4 +211,5 @@ data "kubernetes_service" "app_service" {
   metadata {
     name = "redis-flask-app-service" # Ім'я з service.yaml
   }
+
 }
