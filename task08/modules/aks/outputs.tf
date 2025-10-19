@@ -4,9 +4,10 @@ output "kube_config_raw" {
   sensitive   = true
 }
 
-output "aks_kv_access_identity_id" {
-  description = ".."
-  value       = azurerm_kubernetes_cluster.aks.key_vault_secrets_provider[0].secret_identity[0].object_id
+output "aks_kv_csi_driver_identity_client_id" {
+  description = "The Client ID of the Key Vault CSI driver identity for AKS."
+  # Беремо Client ID нашої НОВОЇ ідентичності
+  value = azurerm_user_assigned_identity.aks_csi_identity.client_id
 }
 
 output "cluster_name" {
@@ -38,3 +39,4 @@ output "aks_acr_pull_role_assignment_id" {
   description = "The ID of the AcrPull role assignment for AKS."
   value       = azurerm_role_assignment.aks_acr_pull.id
 }
+
