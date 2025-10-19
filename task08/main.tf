@@ -165,7 +165,10 @@ locals {
 resource "kubectl_manifest" "k8s_secret_provider" {
   # Залежність: чекаємо, поки AKS буде готовий
   provider   = kubectl.aks_cluster
-  depends_on = [azurerm_container_registry_task_schedule_run_now.run_build]
+  depends_on = [
+    azurerm_container_registry_task_schedule_run_now.run_build,
+    module.aks.aks_acr_pull_role_assignment_id # <--- ДОДАЙ ЦЕЙ РЯДОК
+  ]
   # Рендеримо шаблон, заповнюючи його нашими змінними
   yaml_body = templatefile("${path.root}/k8s-manifests/secret-provider.yaml.tftpl", local.k8s_manifest_vars)
 }
@@ -213,3 +216,4 @@ data "kubernetes_service" "app_service" {
   }
 
 }
+
